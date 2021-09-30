@@ -2,12 +2,12 @@ import React from "react";
 import Board from 'react-trello'
 
 const MainBoard = () => {
-  const data = JSON.parse(localStorage.getItem("data")) || {
+  const data = {
     lanes: [
       {
-        id: 'back-log',
-        title: 'BackLog',
-        cards: []
+        id: 'to-do',
+        title: 'To Do',
+        cards: [],
       },
       {
         id: 'in-progress',
@@ -23,25 +23,23 @@ const MainBoard = () => {
         id: 'done',
         title: 'Done',
         cards: []
+      },
+      {
+        id: 'back-log',
+        title: 'BackLog',
+        cards: [],
+        style: { display: "flex" }
       }
     ]
   }
 
-  function onDataChange(newData) {
-    localStorage.setItem("data", JSON.stringify(newData))
-  }
-
   return (
           <Board
-          style={{ backgroundColor: "#F9FAFB" }}
-          onDataChange={onDataChange}
-          draggable={true}
+          style={{ backgroundColor: "#F9FAFB", justifyContent: "space-between", overflow: "initial" }}
           cardDraggable={true}
           collapsibleLanes={true}
           editable={true}
-          canAddLanes={true}
           hideCardDeleteIcon={false}
-          editLaneTitle={true}
           data={data} />
   )
 }
