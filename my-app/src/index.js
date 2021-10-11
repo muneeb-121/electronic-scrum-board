@@ -1,12 +1,13 @@
-import { StrictMode } from "react";
+import { Fragment } from "react";
 import ReactDOM from "react-dom";
+import "./style.css"
 
 import App from "./App";
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(
-    <StrictMode>
+    <Fragment>
         <App />
-    </StrictMode>,
+    </Fragment>,
     rootElement
 );
