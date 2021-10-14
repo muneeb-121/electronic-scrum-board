@@ -161,7 +161,7 @@ const SignUp = () => {
       <Form.Item
         label="Password"
         name="password"
-        rules={[{ required: true, message: 'Please input your password!' }, { len: 8, message: "Password should contain 8 characters"}]}
+        rules={[{ required: true, message: 'Please input your password!' }, { min: 8, message: "Password should contain 8 atleast characters"}]}
       >
         <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} placeholder="password" />
       </Form.Item>
