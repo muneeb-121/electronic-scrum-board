@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { Row, Col, Card, Button, Form, Modal, Input, Popconfirm, message } from "antd"
 import { authUserData } from "../store";
 import { allProjects, updateUserProjects, addProject, removeProject } from "../store/projects";
-import { EditOutlined, PlusOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
+import { EditOutlined, PlusOutlined, DeleteOutlined } from '@ant-design/icons';
 const { Meta } = Card;
 
 
@@ -40,12 +40,10 @@ const Projects = () => {
             {
                 user?.projects?.map((project, idx) => (
                     <Col className="gutter-row" span={6} key={"project_" + idx}>
+                        <Link to={`/projects/${project.guid}`}>
                         <Card
-                            style={{ minHeight: "150Px", marginTop: 16 }}
+                            style={{ minHeight: "150Px", marginTop: 16, cursor: "pointer" }}
                             actions={[
-                                <Link to={`/projects/${project.guid}`}>
-                                    <EyeOutlined title="View Board"  key="view board" />
-                                </Link>,
                                 <EditOutlined key="edit" onClick={() => {
                                     setSelectedProject(project)
                                     setVisible(true)
@@ -69,6 +67,7 @@ const Projects = () => {
                                 description={project.description}
                                 />
                         </Card>
+                        </Link>
                     </Col>
                 ))
             }
@@ -93,7 +92,7 @@ const ProjectForm = ({ visible, onSubmit, onCancel, project }) => {
   const [form] = Form.useForm();
   useEffect(() => {
       form.setFieldsValue(project)
-  }, [project])
+  }, [project, form])
 
   return (
     <Modal
@@ -115,7 +114,7 @@ const ProjectForm = ({ visible, onSubmit, onCancel, project }) => {
       <Form
         form={form}
         layout="vertical"
-        name="project_form"
+        name="project-form"
         initialValues={{
           modifier: 'public',
         }}

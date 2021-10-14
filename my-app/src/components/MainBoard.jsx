@@ -1,53 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Board from 'react-trello'
+import { readProjectData, updateProjectData } from "../store/projects"
+import { useParams } from 'react-router-dom'
+
 
 const MainBoard = () => {
-  const data = {
-    lanes: [
-      {
-        id: 'back-log',
-        title: 'BackLog',
-        cards: []
-      },
-      {
-        id: 'to-do',
-        title: 'To Do',
-        cards: []
-      },
-      {
-        id: 'in-progress',
-        title: 'In Progress',
-        cards: []
-      },
-      {
-        id: 'in-review',
-        title: 'Review',
-        cards: []
-      },
-      {
-        id: 'done',
-        title: 'Done',
-        cards: []
-      },
-      {
-        id: 'bugs',
-        title: 'Bugs',
-        cards: [],
-        style: { display: "flex" }
-      }
-    ]
+  const { projectId } = useParams()
+  const [projectData, setProjectData] = useState(null)
+
+  function onDataChange(data) {
+    updateProjectData(projectId, data)
+    setProjectData(data)
+    
   }
 
+  useEffect(() => {
+    setProjectData(readProjectData(projectId))
+  }, [projectId])
+  
   return (
-    <Board
+    projectData ? <Board
       style={{ backgroundColor: "unset", overflow: "unset" }}
-      // style={{ backgroundColor: "unset", justifyContent: "space-between",  }}
       cardDraggable={true}
       collapsibleLanes={true}
       editable={true}
       hideCardDeleteIcon={false}
-      data={data} 
-    />
+      onDataChange={onDataChange}
+      data={projectData} 
+    /> : null
   )
 }
 

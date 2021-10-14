@@ -50,10 +50,15 @@ function updateProjectData(projectGuid, data) {
     db.save(projectGuid, data)
 }
 
+function readProjectData(projectGuid) {
+    return db.read(projectGuid)
+}
+
 export {
     addProject,
     removeProject,
     updateUserProjects,
     updateProjectData,
-    allProjects
+    allProjects,
+    readProjectData
 }
