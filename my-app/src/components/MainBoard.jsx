@@ -5,9 +5,14 @@ const MainBoard = () => {
   const data = {
     lanes: [
       {
+        id: 'back-log',
+        title: 'BackLog',
+        cards: []
+      },
+      {
         id: 'to-do',
         title: 'To Do',
-        cards: [],
+        cards: []
       },
       {
         id: 'in-progress',
@@ -25,8 +30,8 @@ const MainBoard = () => {
         cards: []
       },
       {
-        id: 'back-log',
-        title: 'BackLog',
+        id: 'bugs',
+        title: 'Bugs',
         cards: [],
         style: { display: "flex" }
       }
@@ -34,13 +39,15 @@ const MainBoard = () => {
   }
 
   return (
-          <Board
-          style={{ backgroundColor: "#F9FAFB", justifyContent: "space-between", overflow: "initial" }}
-          cardDraggable={true}
-          collapsibleLanes={true}
-          editable={true}
-          hideCardDeleteIcon={false}
-          data={data} />
+    <Board
+      style={{ backgroundColor: "unset", overflow: "unset" }}
+      // style={{ backgroundColor: "unset", justifyContent: "space-between",  }}
+      cardDraggable={true}
+      collapsibleLanes={true}
+      editable={true}
+      hideCardDeleteIcon={false}
+      data={data} 
+    />
   )
 }
 
