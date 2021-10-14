@@ -27,7 +27,7 @@ const Login = () => {
         <TabPane tab="SignIn" key="1">
           <SignIn/>
         </TabPane>
-        <TabPane tab="Sign Up" key="2">
+        <TabPane tab="SignUp" key="2">
           <SignUp/>
         </TabPane>
       </Tabs>
@@ -83,7 +83,7 @@ const SignIn = () => {
 
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
         <Button type="primary" htmlType="submit" className="submit">
-          Login
+          SignIn
         </Button>
       </Form.Item>
     </Form>
@@ -94,12 +94,14 @@ const SignIn = () => {
 const SignUp = () => {
   const [error, setError] = useState("")
   const [success, setSuccess] = useState("")
+  const [form] = Form.useForm()
 
-  const onFinish = ({ email, username, password }) => {
+  const onFinish = ({ email, username, password, name }) => {
     try {
-      newUser({ email, username, password })
+      newUser({ email, username, password, name })
       setError("")
       setSuccess("SignUp successfull!")
+      form.resetFields()
     } catch (error) {
       setError(error.message)    
       setSuccess("")      
@@ -125,6 +127,7 @@ const SignUp = () => {
         onClose={()=>setSuccess("")}
     /> : null}
     <Form
+      form={form}
       name="signup"
       labelCol={{ span: 8 }}
       initialValues={{ remember: true }}
@@ -140,6 +143,14 @@ const SignUp = () => {
       </Form.Item>
 
       <Form.Item
+        label="Name"
+        name="name"
+        rules={[{ required: true, message: 'Please input your full name!' }]}
+      >
+        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="full name"/>
+      </Form.Item>
+
+      <Form.Item
         label="Username"
         name="username"
         rules={[{ required: true, message: 'Please input your username!' }]}
@@ -150,7 +161,7 @@ const SignUp = () => {
       <Form.Item
         label="Password"
         name="password"
-        rules={[{ required: true, message: 'Please input your password!' }]}
+        rules={[{ required: true, message: 'Please input your password!' }, { len: 8, message: "Password should contain 8 characters"}]}
       >
         <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} placeholder="password" />
       </Form.Item>
@@ -180,7 +191,7 @@ const SignUp = () => {
 
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
         <Button type="primary" htmlType="submit" className="submit">
-          Login
+          SignUp
         </Button>
       </Form.Item>
     </Form>

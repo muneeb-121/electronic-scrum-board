@@ -3,8 +3,7 @@ import { Link } from "react-router-dom"
 import { Row, Col, Card, Button, Form, Modal, Input, Popconfirm, message } from "antd"
 import { authUserData } from "../store";
 import { allProjects, updateUserProjects, addProject, removeProject } from "../store/projects";
-import { EditOutlined, PlusOutlined, DeleteOutlined } from '@ant-design/icons';
-const { Meta } = Card;
+import { EditOutlined, PlusOutlined, DeleteOutlined, ArrowRightOutlined } from '@ant-design/icons';
 
 
 const Projects = () => {
@@ -40,9 +39,12 @@ const Projects = () => {
             {
                 user?.projects?.map((project, idx) => (
                     <Col className="gutter-row" span={6} key={"project_" + idx}>
-                        <Link to={`/projects/${project.guid}`}>
                         <Card
-                            style={{ minHeight: "150Px", marginTop: 16, cursor: "pointer" }}
+                            title={project.name}
+                            style={{ minHeight: "150Px", marginTop: 16 }}
+                            extra={
+                                <Link to={`/projects/${project.guid}`}><ArrowRightOutlined /></Link>
+                            }
                             actions={[
                                 <EditOutlined key="edit" onClick={() => {
                                     setSelectedProject(project)
@@ -61,13 +63,9 @@ const Projects = () => {
                                     <DeleteOutlined key="delete"/>
                                 </Popconfirm>
                             ]}
-                            >
-                                <Meta
-                                title={project.name}
-                                description={project.description}
-                                />
+                        >
+                            {project.description}
                         </Card>
-                        </Link>
                     </Col>
                 ))
             }
@@ -92,7 +90,7 @@ const ProjectForm = ({ visible, onSubmit, onCancel, project }) => {
   const [form] = Form.useForm();
   useEffect(() => {
       form.setFieldsValue(project)
-  }, [project, form])
+  }, [project])
 
   return (
     <Modal
@@ -102,6 +100,7 @@ const ProjectForm = ({ visible, onSubmit, onCancel, project }) => {
         okText="Confirm"
         cancelText="Cancel"
         onCancel={onCancel}
+        getContainer={false}
         onOk={() => {
             form
             .validateFields()
