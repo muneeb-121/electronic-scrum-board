@@ -6,44 +6,54 @@ import { authUserData } from "."
 
 
 function allProjects(userGuid) {
-    const users = db.read("users").filter(x => x.guid === userGuid)
-    if (users.length) return users[0]
-    return null
+    const accessList = db.read("accessList").filter(x => x.userGuid === userGuid)
+    const actionsAccessList = accessList.reduce((acc, x) => {
+        acc[x.projectGuid] = x
+        return acc
+    },{})
+
+    let projects = db.read("projects").filter(x => accessList.map(x => x.projectGuid).includes(x.guid))
+    
+    projects = projects.map(x => {
+        x.role = actionsAccessList[x.guid].role
+        return x
+    })
+    console.log({ projects, actionsAccessList })
+    return projects
 }
 
 function addProject(project) {
     const userGuid = authUserData().guid
-    const users = db.read("users")
-    const index = users.findIndex(x => x.guid === userGuid)
     project = {
         ...project,
         guid: uuidv4(),
+        userGuid,
         createdAt: moment().format("MMM-DD-YYYY h:mm:ss a")
     }
-    users[index] = { ...users[index], projects: [ ...users[index].projects, project ] }
-    db.save("users", users)
+
+    db.addToResourceList("projects", project)
+    db.addToResourceList("accessList", {
+        projectGuid: project.guid,
+        userGuid,
+        role: "owner",
+    })
     db.save(project.guid, DefaultBoard)
 }
 
 function removeProject(projectGuid) {
-    const userGuid = authUserData().guid
-    const users = db.read("users")
-
-    const userIndex = users.findIndex(x => x.guid === userGuid)
-    users[userIndex].projects = users[userIndex].projects.filter(x => x.guid !== projectGuid)
-    db.save("users", users)
+    db.filterResourceList("projects", "guid", projectGuid)
+    db.filterResourceList("accessList", "projectGuid", projectGuid)
     db.deleteKey(projectGuid)
 }
 
 function updateUserProjects(projectGuid, data) {
-    const userGuid = authUserData().guid
-    const users = db.read("users")
-    const userIndex = users.findIndex(x => x.guid === userGuid)
-    const projectIndex = users[userIndex].projects.findIndex(x => x.guid === projectGuid)
+    const projects = db.read("projects")
+    const projectIndex = projects.findIndex(x => x.guid === projectGuid)
 
-    users[userIndex].projects[projectIndex].name = data.name
-    users[userIndex].projects[projectIndex].description = data.description
-    db.save("users", users)
+    projects[projectIndex].name = data.name
+    projects[projectIndex].description = data.description
+
+    db.save("projects", projects)
 }
 
 function updateProjectData(projectGuid, data) {
@@ -53,6 +63,7 @@ function updateProjectData(projectGuid, data) {
 function readProjectData(projectGuid) {
     return db.read(projectGuid)
 }
+
 
 export {
     addProject,

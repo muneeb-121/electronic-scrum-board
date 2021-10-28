@@ -1,4 +1,4 @@
-import { Users, DefaultBoard } from "./seedData"
+import { Users, DefaultBoard, Projects, ProjectAccessList } from "./seedData"
 import db from "./common"
 import { v4 as uuidv4 } from "uuid"
 
@@ -8,7 +8,10 @@ function initStore() {
         console.log("Store already initialized")
     } catch (error) {
         db.save("users", Users)
-        db.save(Users[0].projects[0].guid, DefaultBoard)
+        db.save("projects", Projects)
+        db.save(Projects[0].guid, DefaultBoard)
+        db.save("accessList", ProjectAccessList)
+        db.save("invites", [])
     }
 }
 
@@ -32,11 +35,12 @@ function newUser(newUser) {
 
     newUser = { 
         ...newUser,
-        uuid: uuidv4(),
-        projects: []
+        guid: uuidv4(),
+        role: "owner"
     }
     allUsers.push(newUser)
     db.save("users", allUsers)
+    return newUser
 }
 
 function tokenisValid() {

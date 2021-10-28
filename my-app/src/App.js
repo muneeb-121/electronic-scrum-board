@@ -3,6 +3,7 @@ import { Route, BrowserRouter, Switch, Redirect } from "react-router-dom"
 import MainBoard from "./components/MainBoard";
 import Login from "./components/Login";
 import Projects from "./components/Projects";
+import InvitedUser from "./components/InvitedUser";
 import Layout from "./Layouts";
 import { initStore, tokenisValid } from "./store";
 
@@ -26,6 +27,11 @@ const routes = [
         path: "/projects/:projectId",
         authRequired: true,
         main: MainBoard
+    },
+    {
+      path: "/invite/:inviteId",
+      authRequired: false,
+      main: InvitedUser
     }
   ];
 
