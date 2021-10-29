@@ -55,7 +55,7 @@ const Projects = () => {
                             title={project.name}
                             style={{ minHeight: "150Px", marginTop: 16 }}
                             extra={
-                                <Link to={`/projects/${project.guid}`}><ArrowRightOutlined /></Link>
+                                <Link to={`/projects/${project.guid}/backlog`}><ArrowRightOutlined /></Link>
                             }
                             actions={project.role === "owner" ? [
                                 <EditOutlined key="edit" onClick={() => {

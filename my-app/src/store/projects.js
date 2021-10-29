@@ -18,7 +18,6 @@ function allProjects(userGuid) {
         x.role = actionsAccessList[x.guid].role
         return x
     })
-    console.log({ projects, actionsAccessList })
     return projects
 }
 
@@ -56,8 +55,10 @@ function updateUserProjects(projectGuid, data) {
     db.save("projects", projects)
 }
 
-function updateProjectData(projectGuid, data) {
-    db.save(projectGuid, data)
+function updateProjectData(projectGuid, key, data) {
+    const project = db.read(projectGuid) 
+    project[key] = data
+    db.save(projectGuid, project)
 }
 
 function readProjectData(projectGuid) {

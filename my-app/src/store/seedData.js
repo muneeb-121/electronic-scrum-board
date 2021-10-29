@@ -29,37 +29,43 @@ export const ProjectAccessList = [
 ]
 
 export const DefaultBoard = {
-  lanes: [
-    {
-      id: 'back-log',
-      title: 'BackLog',
-      cards: []
-    },
-    {
-      id: 'to-do',
-      title: 'To Do',
-      cards: [],
-    },
-    {
-      id: 'in-progress',
-      title: 'In Progress',
-      cards: []
-    },
-    {
-      id: 'in-review',
-      title: 'Review',
-      cards: []
-    },
-    {
-      id: 'done',
-      title: 'Done',
-      cards: []
-    },
-    {
-      id: 'bugs',
-      title: 'Bugs',
-      cards: [],
-      style: { display: "flex" }
-    }
-  ]
+  sprint: {
+    lanes: [
+      {
+        id: 'back-log',
+        title: 'BackLog',
+        cards: []
+      }
+    ]
+  },
+  board: {
+    lanes: [
+      {
+        id: 'to-do',
+        title: 'To Do',
+        cards: [],
+      },
+      {
+        id: 'in-progress',
+        title: 'In Progress',
+        cards: []
+      },
+      {
+        id: 'in-review',
+        title: 'Review',
+        cards: []
+      },
+      {
+        id: 'done',
+        title: 'Done',
+        cards: []
+      },
+      {
+        id: 'bugs',
+        title: 'Bugs',
+        cards: [],
+        style: { display: "flex" }
+      }
+    ]
+  }
 }
