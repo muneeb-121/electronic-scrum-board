@@ -223,7 +223,7 @@ const InviteForm = ({ visible, onSubmit, onCancel, projects }) => {
           >
             <Select
             mode="multiple"
-            placeholder="Inserted are removed"
+            placeholder="Project to share"
             onChange={(values) => form.setFieldsValue({ projects: values }) }
             style={{ width: '100%' }}
             >
