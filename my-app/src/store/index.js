@@ -21,7 +21,7 @@ function authenticateUser(email, password) {
     user = user.filter((x) => x.password === password)
     if (!user.length) throw new Error("Password doest not match")
     makeToken({ name: user[0].name, username: user[0].name, email: user[0].email, exp: Date.now() + 60*60000, guid: user[0].guid })
-    return user
+    return user[0]
 }
 
 function newUser(newUser) {
