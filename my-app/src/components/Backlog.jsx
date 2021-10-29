@@ -152,10 +152,13 @@ const LaneHeader = (props) => {
       }}/>
     </div>
     </Modal>
-      <h2>{props.title} {props.status}</h2>
+    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <h2>{props.title}</h2>
+      { props.type === "sprint" ? <CustomTag status={props.status}/> : null}
+    </div>
       { props.title === "BackLog" ? <Button onClick={() => setVisible(true)}><PlusOutlined />Sprint</Button> : null }
       { props.type === "sprint" ? <div>
-      <Button onClick={() => {
+      <Button title="Delete Sprint" onClick={() => {
         try {
           deleteSprint(props.projectId, props.id)
           message.success(`Sprint: ${props.title} deleted successfully!`)
@@ -167,7 +170,7 @@ const LaneHeader = (props) => {
 
       {
         props.status === "new" ? 
-        <Button title="Delete Sprint" onClick={() => {
+        <Button title="Start Sprint" onClick={() => {
           try {
             startSprint(props.projectId, props.id)
             message.success(`Sprint: ${props.title} started successfully!`)
@@ -194,6 +197,25 @@ const LaneHeader = (props) => {
       </Typography>
       </div> : null }
     </div>
+  )
+}
+
+const CustomTag = ({ status }) => {
+  function getAttr (s) {
+    let attr = {}
+    switch (s) {
+      case "started":
+        attr = { color: "warning", text: "In progress"}
+        break;
+      default:
+        attr = { color: "processing", text: "New" }
+        break;
+    }
+    return attr
+  }
+
+  return (
+    <Tag color={getAttr(status).color}>{getAttr(status).text}</Tag>
   )
 }
 
