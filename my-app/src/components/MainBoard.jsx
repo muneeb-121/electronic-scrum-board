@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Board from 'react-trello'
 import { readProjectData, updateProjectData } from "../store/projects"
 import { useParams, useHistory } from 'react-router-dom'
-import { Card, Typography, Popconfirm, message, Form, Input, DatePicker, Button, Row, Col, Select, Tag  } from "antd"
+import { Card, Typography, Popconfirm, message, Form, Input, DatePicker, Button, Row, Col, Select, Tag } from "antd"
 import { DeleteOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import moment from "moment";
 const { Paragraph, Text } = Typography;
@@ -12,36 +12,38 @@ const MainBoard = () => {
 
   const components = {
     Card: CustomCard,
-    NewCardForm: NewCardForm
+    NewCardForm: NewCardForm,
+    AddCardLink: () => null
   }
 
   const router = useHistory()
 
   const { projectId } = useParams()
-  const [projectData, setProjectData] = useState(null)
+  const [projectBoardData, setProjectBoardData] = useState(null)
 
   function onDataChange(data) {
-    updateProjectData(projectId, data)
-    setProjectData(data)
+    updateProjectData(projectId, "board", data)
+    setProjectBoardData(data)
   }
 
   useEffect(() => {
     try {
-      setProjectData(readProjectData(projectId))
+      const { board } = readProjectData(projectId)
+      setProjectBoardData(board)
     } catch (error) {
       router.push("/projects")      
     }
   }, [projectId])
   
   return (
-    projectData ? <Board
+    projectBoardData ? <Board
       style={{ backgroundColor: "white", overflow: "auto" }}
       cardDraggable={true}
       collapsibleLanes={true}
       editable={true}
       hideCardDeleteIcon={false}
       onDataChange={onDataChange}
-      data={projectData} 
+      data={projectBoardData} 
       components={components}
     /> : null
   )

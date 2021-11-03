@@ -3,6 +3,8 @@ import { Route, BrowserRouter, Switch, Redirect } from "react-router-dom"
 import MainBoard from "./components/MainBoard";
 import Login from "./components/Login";
 import Projects from "./components/Projects";
+import InvitedUser from "./components/InvitedUser";
+import Backlog from "./components/Backlog";
 import Layout from "./Layouts";
 import { initStore, tokenisValid } from "./store";
 
@@ -23,9 +25,19 @@ const routes = [
         main: Projects
     },
     {
-        path: "/projects/:projectId",
+        path: "/projects/:projectId/board",
         authRequired: true,
         main: MainBoard
+    },
+    {
+      path: "/projects/:projectId/backlog",
+      authRequired: true,
+      main: Backlog
+  },
+    {
+      path: "/invite/:inviteId",
+      authRequired: false,
+      main: InvitedUser
     }
   ];
 

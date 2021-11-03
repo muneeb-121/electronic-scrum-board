@@ -1,31 +1,45 @@
 import moment from "moment"
 
 export const Users = [
-    {
-        name: "Muneeb Ahmad",
-        username: "muneebahmad",
-        email: "muneeb.ahmad@email.com",
-        guid: "9ed14516-0780-4404-7285-27d28a4a95f9",
-        role: "owner",
-        password: "password",
-        projects: [
-            {
-                name: "Welcom Board",
-                description: "This is a test board.",
-                guid: "9ed24516-0780-4204-1285-27d2a4a99f9",
-                createdAt: moment().format("MMM-DD-YYYY h:mm:ss a")
-            }
-        ]
-    }
+  {
+    name: "Muneeb Ahmad",
+    username: "muneebahmad",
+    email: "muneeb.ahmad@email.com",
+    guid: "9ed14516-0780-4404-7285-27d28a4a95f9",
+    role: "owner",
+    password: "password",
+  }
+]
+
+export const Projects = [
+  {
+    name: "Welcom Board",
+    description: "This is a test board.",
+    guid: "9ed24516-0780-4204-1285-27d2a4a99f9",
+    createdAt: moment().format("MMM-DD-YYYY h:mm:ss a")
+  }
+] 
+
+export const ProjectAccessList = [
+  {
+    role: "owner",
+    userGuid: "9ed14516-0780-4404-7285-27d28a4a95f9",
+    projectGuid: "9ed24516-0780-4204-1285-27d2a4a99f9"
+  }
 ]
 
 export const DefaultBoard = {
+  sprint: {
     lanes: [
       {
         id: 'back-log',
         title: 'BackLog',
         cards: []
-      },
+      }
+    ]
+  },
+  board: {
+    lanes: [
       {
         id: 'to-do',
         title: 'To Do',
@@ -53,4 +67,5 @@ export const DefaultBoard = {
         style: { display: "flex" }
       }
     ]
+  }
 }
